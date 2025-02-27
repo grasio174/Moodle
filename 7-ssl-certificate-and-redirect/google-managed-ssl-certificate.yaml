@@ -1,0 +1,18 @@
+
+---
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: moodle-google-managed-certificate
+  namespace: moodle
+spec:
+  domains:
+    # any domain name you have availabe to use:
+    #- somedomain.somesite.com
+    # ie.
+    # www.mymoodlesite.com
+    # or
+    #- anything-you-want.<your-lb-external-ip-address>.nip.io
+    # ie.
+    - grasiomoodle.my.id
+    #- MY_MOODLE_PUBLIC_IP_ADDRESS=$(gcloud compute addresses describe moodle-ingress-ip --global --format='get(address)')

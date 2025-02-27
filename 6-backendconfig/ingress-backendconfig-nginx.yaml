@@ -1,0 +1,38 @@
+
+---
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  name: ingress-backendconfig
+  namespace: moodle
+spec:
+  timeoutSec: 300
+  connectionDraining:
+    drainingTimeoutSec: 10
+  healthCheck:
+    checkIntervalSec: 10
+    timeoutSec: 10
+    port: 8080
+    type: HTTP
+    requestPath: /healthz
+  logging:
+    enable: false
+    sampleRate: 0.1 
+    # 0.1 means only 10% will be logged, 1 all will be logged
+  # to uncoment when a cloud armor security policy exists and you want to apply it to the LB
+  # securityPolicy:
+  #   name: "moodle-armor-policy"
+  # to uncoment when you want to enable CDN
+  cdn:
+    enabled: true
+    cachePolicy:
+      includeHost: true
+      includeProtocol: true
+      includeQueryString: true
+  #     queryStringBlacklist: ""
+  #     queryStringWhitelist: ""
+  # to uncoment when gke >= 1.23.3-gke.900
+    cacheMode: CACHE_ALL_STATIC
+    clientTtl: 3600
+    defaultTtl: 3600
+    maxTtl: 86400
