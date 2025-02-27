@@ -1,0 +1,29 @@
+
+---
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: [
+    'build',
+    '--build-arg',
+    'MOODLE_ROOT_PATH=${_MOODLE_ROOT_PATH}',
+    '--build-arg',
+    'MOODLE_DATAROOT_PATH=${_MOODLE_DATAROOT_PATH}',
+    '--build-arg',
+    'MOODLE_PATH=${_MOODLE_PATH}',
+    '-t',
+    'asia-southeast1-docker.pkg.dev/vertical-jetty-448611-h5/moodle-filestore/moodle-nginx:$BUILD_ID',
+    #'asia-southeast1-docker.pkg.dev/operating-bolt-442711-j6/moodle-filestore/moodle-nginx/moodleroot-instance1@sha256:9468670de8827e159598e88fd2fbf01ceb06b9a53d8da913762c0349171c739a',
+    '.',
+    '-f',
+    'Dockerfile.nginx'
+  ]
+- name: 'gcr.io/cloud-builders/docker'
+  args: [
+    'push',
+    'asia-southeast1-docker.pkg.dev/vertical-jetty-448611-h5/moodle-filestore/moodle-nginx:$BUILD_ID'
+    #'asia-southeast1-docker.pkg.dev/operating-bolt-442711-j6/moodle-filestore/moodle-nginx/moodleroot-instance1@sha256:9468670de8827e159598e88fd2fbf01ceb06b9a53d8da913762c0349171c739a'
+  ]
+substitutions:
+  _MOODLE_ROOT_PATH: /moodleroot-instance1
+  _MOODLE_DATAROOT_PATH: /moodleroot-instance1/moodledata
+  _MOODLE_PATH: /moodleroot-instance1/moodle
